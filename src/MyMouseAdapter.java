@@ -173,11 +173,13 @@ public class MyMouseAdapter extends MouseAdapter {
 							Color newColor =Color.RED;
 							myPanelFlag.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY] = newColor;
 							myPanelFlag.repaint();
+							MyPanel.mines--;
 						}
 						else if(myPanelFlag.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY]==Color.RED){
 							Color newColor =Color.WHITE;
 							myPanelFlag.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY] = newColor;
 							myPanelFlag.repaint();
+							MyPanel.mines++;
 						}
 
 

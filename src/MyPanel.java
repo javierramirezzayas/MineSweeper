@@ -100,11 +100,11 @@ public class MyPanel extends JPanel {
 		}
 		
 		//Small square for bombs
-//		g.setColor(Color.WHITE);
-//		g.fillRect(GRID_X+1,(int) (getHeight()*0.85), INNER_CELL_SIZE*4, INNER_CELL_SIZE);
-//		g.setColor(Color.BLACK);
-//		g.fillOval(GRID_X+5,(int)(getHeight()*0.85)+ 4, 20, 20);
-//		g.drawString("Bombs: " + mines, GRID_X+28, (int)(getHeight()*0.90));
+		g.setColor(Color.WHITE);
+		g.fillRect(GRID_X+1,(int) (getHeight()*0.85), INNER_CELL_SIZE*4, INNER_CELL_SIZE);
+		g.setColor(Color.BLACK);
+		g.fillOval(GRID_X+5,(int)(getHeight()*0.85)+ 4, 20, 20);
+		g.drawString("Bombs: " + mines, GRID_X+28, (int)(getHeight()*0.90));
 		
 		
 		//Smiley Face
