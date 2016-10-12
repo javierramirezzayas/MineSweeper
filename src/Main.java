@@ -7,7 +7,7 @@ public class Main {
 		myFrame.setResizable(false);
 		
 		
-		myFrame.setSize(400, 400);
+		myFrame.setSize(323, 400);
 
 		MyPanel myPanel = new MyPanel();
 		myFrame.add(myPanel);

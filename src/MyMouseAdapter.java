@@ -182,7 +182,7 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Released the mouse button on a different cell where it was pressed
 						//Do nothing
 					} else {
-						if(MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY]==Color.WHITE){
+						if(MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY]==Color.WHITE && MyPanel.mines>0){
 							Color newColor =Color.RED;
 							MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY] = newColor;
 							myPanelFlag.repaint();

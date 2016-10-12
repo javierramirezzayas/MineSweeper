@@ -97,13 +97,9 @@ public class MyPanel extends JPanel {
 		g.setColor(Color.WHITE);
 		g.fillRect(GRID_X+1,(int) (getHeight()*0.85), INNER_CELL_SIZE*4, INNER_CELL_SIZE);
 		g.setColor(Color.BLACK);
-		g.fillOval(GRID_X+5,(int)(getHeight()*0.85)+ 4, 20, 20);
+		g.fillRect(GRID_X+5,(int)(getHeight()*0.85)+ 4, 20, 20);
 		g.drawString("Bombs: " + mines, GRID_X+28, (int)(getHeight()*0.90));
 
-
-		//Smiley Face
-		//		g.setColor(Color.YELLOW);
-		//		g.fillOval(300, (getWidth()-100)/2, 100, 100);
 
 		//Paint cell colors
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {
