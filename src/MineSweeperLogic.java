@@ -16,17 +16,9 @@ public class MineSweeperLogic extends MyPanel{
 		return squareCounter;
 	}
 
-//	public static boolean playerStatus(int gridX, int gridY){
-//		boolean status = false;
-//		if(booleanArray[gridX][gridY] && notMines == ((TOTAL_COLUMNS*TOTAL_ROWS)-mines)){
-//			status = true;
-//		}
-//		else if (booleanArray[gridX][gridY]==true){
-//			System.out.println("Game Over!");
-//		}
-//		return status;
-//	}
-
+	
+		
+	
 	//-------------addded javier
 	public static void checkEmptyGrid(int gridX, int gridY){ //necesita pintar
 
