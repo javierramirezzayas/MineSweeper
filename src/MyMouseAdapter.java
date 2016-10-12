@@ -98,8 +98,9 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Released the mouse button on the same cell where it was pressed
 
 						//On the grid other than on the left column and on the top row:
-						if(MyPanel.booleanArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] &&( myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.WHITE)){
-
+						if(MyPanel.booleanArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] 
+								&&( myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.WHITE)){
+							// If mouse is pressed on the grid and the color is white and there IS MINE, then paint it black. 
 							Color newColor =Color.BLACK;
 							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							myPanel.repaint();	
@@ -115,19 +116,23 @@ public class MyMouseAdapter extends MouseAdapter {
 							myPanel.repaint();
 						}
 						else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.WHITE){
+							// If mouse is pressed on the grid and the color is white and there is NO MINE, then paint it gray.
 							Color newColor =Color.LIGHT_GRAY;
 							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							MyPanel.notMines++;
 							System.out.println(MyPanel.notMines);
 							System.out.println("Mines" + MyPanel.mines);
 							myPanel.repaint();
-
-							//--- added by javier
-							int number = MineSweeperLogic.squareProperty(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
-							MyPanel.numbersArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = number;
-							//--- added by javier
 						}
-
+						
+						//--- added by javier
+						if (MyPanel.numbersArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == 0){
+							//check and paint if there are empty spaces around the grid pressed
+							//metodo invoca mismo metodo.
+							MineSweeperLogic.checkEmptyGrid(myPanel.mouseDownGridX,myPanel.mouseDownGridY);
+							//if derecha, izquierda, arriba, abajo == 0 do it again
+						}
+						//--- added by javier
 
 
 					}

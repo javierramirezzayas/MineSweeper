@@ -29,7 +29,18 @@ public class MineSweeperLogic extends MyPanel{
 		return status;
 	}
 	
-	
+	//-------------addded javier
+	public static void checkEmptyGrid(int gridX, int gridY){ //necesita pintar
+		for(int x = gridX-1; x <= gridX+1 ; x++){
+			for(int y = gridY-1; y <= gridY+1 ; y++){
+				if (!(x == -1 || y == -1 || x >= TOTAL_COLUMNS || y >= TOTAL_ROWS) && (MyPanel.numbersArray[x][y]==0)){
+				Color newColor = Color.LIGHT_GRAY;
+				colorArray[x][y] = newColor;
+				}
+			}
+		}
+	}
+	//--------------added javier
 	
 
 }
