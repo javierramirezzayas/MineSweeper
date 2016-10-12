@@ -39,33 +39,19 @@ public class MyPanel extends JPanel {
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
 			for (int y = 0; y < TOTAL_ROWS; y++) {
 				colorArray[x][y] = Color.WHITE;
-				if (mines<10){
-					switch(booleanDecider.nextInt(8)){
-					case 0:
-						booleanArray[x][y] = false;//Clear square
-						break;
-					case 1:
-						booleanArray[x][y]= true;//There is a mine
-						mines++;
-						break;
-					}
-				}
-				else{
-					booleanArray[x][y] = false;
-				}
+				booleanArray[x][y] = false;
 			}
 		}
 		while (mines<10){
 			int x = booleanDecider.nextInt(9);
+			System.out.println("x: "+x);
 			int y = booleanDecider.nextInt(9);
-			if((booleanArray[x][y])){
+			System.out.println("y: "+ y);
+			if(!(booleanArray[x][y])){
 				booleanArray[x][y] = true;
 				mines++;
 			}
 		}
-
-		
-		
 		
 		//Setting Mine Indicators (numbers)
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
