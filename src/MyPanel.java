@@ -1,15 +1,9 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Insets;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import java.awt.Image;
+
 public class MyPanel extends JPanel {
 	private static final long serialVersionUID = 3426940946811133635L;
 	private static final int GRID_X = 25;
@@ -27,9 +21,8 @@ public class MyPanel extends JPanel {
 	public static int notMines = 0;
 	public Random booleanDecider = new Random();
 	public static boolean[][] booleanArray = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
-	public static int[][] numbersArray = new int[TOTAL_COLUMNS][TOTAL_ROWS];
-	//---------- added
-	//
+	public static  int[][] numbersArray = new int[TOTAL_COLUMNS][TOTAL_ROWS];
+
 
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 		
@@ -47,7 +40,7 @@ public class MyPanel extends JPanel {
 			for (int y = 0; y < TOTAL_ROWS; y++) {
 				colorArray[x][y] = Color.WHITE;
 				/////------------- added
-				if (mines<15){
+				if (mines<25){
 					switch(booleanDecider.nextInt(8)){
 					case 0:
 						booleanArray[x][y] = false;//Clear square
@@ -56,12 +49,7 @@ public class MyPanel extends JPanel {
 						booleanArray[x][y]= true;//There is a mine
 						mines++;
 						break;
-					case 2:
-						booleanArray[x][y] = false;//Clear square
-						break;
-					case 3:
-						booleanArray[x][y] = false;//Clear square
-						break;
+					
 					}
 				}
 				else{
@@ -72,6 +60,31 @@ public class MyPanel extends JPanel {
 			}
 		}
 	}
+	//////////////////////////
+	public Color getColorArray(int gridX, int gridY){
+		return Color.BLACK;
+	}
+	public int getNumberArray(int gridX, int gridY){
+		return 6;
+	}
+	public boolean getBooleanArray(int gridX, int gridY){
+		return false;
+	}
+	public void setColorArray(int gridX, int gridY, Color color){
+		
+	}
+	
+	public int getMines(){
+		return mines;
+	}
+	public static int getNotMines(){
+		return notMines;
+	}
+	public int addToNotMines(){
+		notMines+=1;
+		return notMines;
+	}
+	//////////////////////////////
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 

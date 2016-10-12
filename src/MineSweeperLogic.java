@@ -1,5 +1,4 @@
-import java.awt.Color;
-import java.awt.Graphics;
+
 
 
 public class MineSweeperLogic extends MyPanel{
@@ -14,7 +13,6 @@ public class MineSweeperLogic extends MyPanel{
 				}
 			}
 		}
-	
 		return squareCounter;
 	}
 	

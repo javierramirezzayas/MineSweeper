@@ -3,10 +3,8 @@ import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Timer;
+import javax.swing.JFrame;
 
-import javax.swing.JFrame;
-import javax.swing.JFrame;
 public class MyMouseAdapter extends MouseAdapter {
 
 	public void mousePressed(MouseEvent e) {
@@ -106,12 +104,10 @@ public class MyMouseAdapter extends MouseAdapter {
 							for(int i=0;i<9;i++){
 								for(int j= 0;j<9;j++){
 									if(MyPanel.booleanArray[i][j]){
-										myPanel.colorArray[i][j]=newColor;
-										
+										myPanel.colorArray[i][j]=newColor;	
 								}
 							}	
 						}
-							
 							myPanel.repaint();
 						}
 						else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.WHITE){
@@ -121,15 +117,9 @@ public class MyMouseAdapter extends MouseAdapter {
 							System.out.println(MyPanel.notMines);
 							System.out.println("Mines" + MyPanel.mines);
 							myPanel.repaint();
-
-							//--- added by javier
 							int number = MineSweeperLogic.squareProperty(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
 							MyPanel.numbersArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = number;
-							//--- added by javier
 						}
-
-
-
 					}
 				}
 			}
@@ -181,13 +171,8 @@ public class MyMouseAdapter extends MouseAdapter {
 							myPanelFlag.repaint();
 							MyPanel.mines++;
 						}
-
-
 					}
-
-
 				}
-
 			}
 
 
