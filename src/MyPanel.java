@@ -15,7 +15,7 @@ public class MyPanel extends JPanel {
 	public int y = -1;
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
-	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
+	public static Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	
 	public static int mines = 0;
 	public static int notMines = 0;
@@ -49,17 +49,23 @@ public class MyPanel extends JPanel {
 						booleanArray[x][y]= true;//There is a mine
 						mines++;
 						break;
-					
 					}
 				}
 				else{
 					booleanArray[x][y] = false;
 				}
-
-				//----------------added
 			}
 		}
+		//--- added by javier
+		//Setting Mine Indicators (numbers)
+		for (int x = 0; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
+			for (int y = 0; y < TOTAL_ROWS; y++) {
+				MyPanel.numbersArray[x][y] = MineSweeperLogic.squareProperty(x,y);
+			}
+		}
+		//--- added by javier
 	}
+
 	//////////////////////////
 	public Color getColorArray(int gridX, int gridY){
 		return Color.BLACK;
@@ -85,6 +91,7 @@ public class MyPanel extends JPanel {
 		return notMines;
 	}
 	//////////////////////////////
+
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -133,28 +140,31 @@ public class MyPanel extends JPanel {
 					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);
 
 
-					//-----------added
-					if (numbersArray[x][y] != 0){
+					//-----------added Javier
+					// If square is pressed and it has an indicator (number) that is not 0: Paint the indicator  
+					if ((colorArray[x][y] == Color.LIGHT_GRAY) && (numbersArray[x][y] != 0)){
 						g.setColor(Color.RED);
-						//need to change values of (x,y) of drawString. Too Long but it works for now.
-						g.drawString(String.valueOf(numbersArray[x][y]), (x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 11), (y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 20));
+						g.drawString(String.valueOf(numbersArray[x][y]), (x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 11),
+										(y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 20));
 					}
+					//------------added Javier
+					
 				}
 			}	
 		}
-		if(colorArray[mouseDownGridX][mouseDownGridY]==Color.BLACK){
-			g.setColor(Color.ORANGE);
-			g.drawString("GAME OVER!", getHeight()/2, getWidth()/2);
-		}
-		else {
-			if(notMines == ((TOTAL_COLUMNS*TOTAL_ROWS)-mines)){
-				g.setColor(Color.MAGENTA);
-				g.drawString("WINNER!", getHeight()/2, getHeight()/2);
+		if(mouseDownGridX!=-1 && mouseDownGridY!=-1){
+			if(colorArray[mouseDownGridX][mouseDownGridY]==Color.BLACK){
+				g.setColor(Color.ORANGE);
+				g.drawString("GAME OVER!", getHeight()/2, getWidth()/2);
 			}
-			
+			else {
+				if(notMines == ((TOTAL_COLUMNS*TOTAL_ROWS)-mines)){
+					g.setColor(Color.MAGENTA);
+					g.drawString("WINNER!", getHeight()/2, getHeight()/2);
+				}
+			}
 		}
-		
-		}
+	}
 		
 		
 	

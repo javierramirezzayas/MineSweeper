@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 
+
 public class MyMouseAdapter extends MouseAdapter {
 
 	public void mousePressed(MouseEvent e) {
@@ -30,6 +31,8 @@ public class MyMouseAdapter extends MouseAdapter {
 			myPanel.mouseDownGridX = myPanel.getGridX(x, y);
 			myPanel.mouseDownGridY = myPanel.getGridY(x, y);
 			myPanel.repaint();
+			
+					
 			break;
 		case 3:		//Right mouse button
 			Component cFlag = e.getComponent();
@@ -53,6 +56,7 @@ public class MyMouseAdapter extends MouseAdapter {
 			myPanelFlag.mouseDownGridY = myPanelFlag.getGridY(xFlag, yFlag);
 			myPanelFlag.repaint();
 			//Do nothing
+			
 			break;
 		default:    //Some other button (2 = Middle mouse button, etc.)
 			//Do nothing
@@ -81,7 +85,7 @@ public class MyMouseAdapter extends MouseAdapter {
 			myPanel.y = y;
 			int gridX = myPanel.getGridX(x, y);
 			int gridY = myPanel.getGridY(x, y);
-			if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1)) {
+			if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1) ) {
 				//Had pressed outside
 				//Do nothing
 			} else {
@@ -96,34 +100,53 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Released the mouse button on the same cell where it was pressed
 
 						//On the grid other than on the left column and on the top row:
-						if(MyPanel.booleanArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] &&( myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.WHITE)){
-
+						if(MyPanel.booleanArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] 
+								&&( MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.WHITE)){
+							// If mouse is pressed on the grid and the color is white and there IS MINE, then paint it black. 
 							Color newColor =Color.BLACK;
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+							MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							myPanel.repaint();	
 							for(int i=0;i<9;i++){
 								for(int j= 0;j<9;j++){
 									if(MyPanel.booleanArray[i][j]){
-										myPanel.colorArray[i][j]=newColor;	
+										MyPanel.colorArray[i][j]=newColor;	
 								}
 							}	
 						}
 							myPanel.repaint();
 						}
-						else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.WHITE){
+						else if(MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.WHITE){
+							// If mouse is pressed on the grid and the color is white and there is NO MINE, then paint it gray.
 							Color newColor =Color.LIGHT_GRAY;
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+							MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							MyPanel.notMines++;
 							System.out.println(MyPanel.notMines);
 							System.out.println("Mines" + MyPanel.mines);
 							myPanel.repaint();
+
 							int number = MineSweeperLogic.squareProperty(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
 							MyPanel.numbersArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = number;
+
+						
+						//--- added by javier
+						if (MyPanel.numbersArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == 0){
+							//check and paint if there are empty spaces around the grid pressed
+							//metodo invoca mismo metodo.
+							MineSweeperLogic.checkEmptyGrid(myPanel.mouseDownGridX,myPanel.mouseDownGridY);
+							
+							
+							
+							//if derecha, izquierda, arriba, abajo == 0 do it again
 						}
+						//--- added by javier
+
+
+
 					}
 				}
 			}
 			myPanel.repaint();
+			}
 			break;
 		case 3:		//Right mouse button
 			//Do nothing
@@ -159,15 +182,15 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Released the mouse button on a different cell where it was pressed
 						//Do nothing
 					} else {
-						if(myPanelFlag.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY]==Color.WHITE){
+						if(MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY]==Color.WHITE){
 							Color newColor =Color.RED;
-							myPanelFlag.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY] = newColor;
+							MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY] = newColor;
 							myPanelFlag.repaint();
 							MyPanel.mines--;
 						}
-						else if(myPanelFlag.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY]==Color.RED){
+						else if(MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY]==Color.RED){
 							Color newColor =Color.WHITE;
-							myPanelFlag.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY] = newColor;
+							MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY] = newColor;
 							myPanelFlag.repaint();
 							MyPanel.mines++;
 						}
