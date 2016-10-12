@@ -4,6 +4,7 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 public class MyMouseAdapter extends MouseAdapter {
@@ -31,8 +32,8 @@ public class MyMouseAdapter extends MouseAdapter {
 			myPanel.mouseDownGridX = myPanel.getGridX(x, y);
 			myPanel.mouseDownGridY = myPanel.getGridY(x, y);
 			myPanel.repaint();
-			
-					
+
+
 			break;
 		case 3:		//Right mouse button
 			Component cFlag = e.getComponent();
@@ -56,7 +57,7 @@ public class MyMouseAdapter extends MouseAdapter {
 			myPanelFlag.mouseDownGridY = myPanelFlag.getGridY(xFlag, yFlag);
 			myPanelFlag.repaint();
 			//Do nothing
-			
+
 			break;
 		default:    //Some other button (2 = Middle mouse button, etc.)
 			//Do nothing
@@ -110,43 +111,49 @@ public class MyMouseAdapter extends MouseAdapter {
 								for(int j= 0;j<9;j++){
 									if(MyPanel.booleanArray[i][j]){
 										MyPanel.colorArray[i][j]=newColor;	
-								}
-							}	
-						}
+									}
+								}	
+							}
 							myPanel.repaint();
+
 						}
 						else if(MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.WHITE){
 							// If mouse is pressed on the grid and the color is white and there is NO MINE, then paint it gray.
 							Color newColor =Color.LIGHT_GRAY;
 							MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							MyPanel.notMines++;
-							System.out.println(MyPanel.notMines);
-							System.out.println("Mines" + MyPanel.mines);
 							myPanel.repaint();
 
-							int number = MineSweeperLogic.squareProperty(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
-							MyPanel.numbersArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = number;
 
-						
-						//--- added by javier
-						if (MyPanel.numbersArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == 0){
-							//check and paint if there are empty spaces around the grid pressed
-							//metodo invoca mismo metodo.
-							MineSweeperLogic.checkEmptyGrid(myPanel.mouseDownGridX,myPanel.mouseDownGridY);
-							
-							
-							
-							//if derecha, izquierda, arriba, abajo == 0 do it again
+							//--- added by javier------------------
+							if (MyPanel.numbersArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == 0){
+								//check and paint if there are empty spaces around the grid pressed
+								//metodo invoca mismo metodo.
+								//Add	//MineSweeperLogic.checkEmptyGrid(myPanel.mouseDownGridX,myPanel.mouseDownGridY);
+								//if derecha, izquierda, arriba, abajo == 0 do it again
+							}
+							//---------------------------------
 						}
-						//--- added by javier
 
-
-
+						System.out.println(MineSweeperLogic.playerLost(myPanel.mouseDownGridX, myPanel.mouseDownGridY));
+						System.out.println(MineSweeperLogic.playerWon(myPanel.mouseDownGridX, myPanel.mouseDownGridY));
+						if(MineSweeperLogic.playerLost(myPanel.mouseDownGridX, myPanel.mouseDownGridY) || MineSweeperLogic.playerWon(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
+							if(MineSweeperLogic.playerLost(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
+								MineSweeperLogic.likeToKeep("SORRY, YOU LOST"
+										+ "  Would you like to play again?", "GAME OVER!");
+							}
+							else{
+								MineSweeperLogic.likeToKeep("CONGRATULATIONS! YOU WON!"
+										+ "  Would you like to play again?", "CONGRATULATIONS!");
+							}
+						}
 					}
+
 				}
+				myPanel.repaint();
 			}
-			myPanel.repaint();
-			}
+
+
 			break;
 		case 3:		//Right mouse button
 			//Do nothing
@@ -197,8 +204,6 @@ public class MyMouseAdapter extends MouseAdapter {
 					}
 				}
 			}
-
-
 			break;
 		default:    //Some other button (2 = Middle mouse button, etc.)
 			//Do nothing

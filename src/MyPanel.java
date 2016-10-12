@@ -44,9 +44,7 @@ public class MyPanel extends JPanel {
 		}
 		while (mines<10){
 			int x = booleanDecider.nextInt(9);
-			System.out.println("x: "+x);
 			int y = booleanDecider.nextInt(9);
-			System.out.println("y: "+ y);
 			if(!(booleanArray[x][y])){
 				booleanArray[x][y] = true;
 				mines++;
@@ -114,18 +112,20 @@ public class MyPanel extends JPanel {
 				}
 			}	
 		}
-		if(mouseDownGridX!=-1 && mouseDownGridY!=-1){
-			if(colorArray[mouseDownGridX][mouseDownGridY]==Color.BLACK){
-				g.setColor(Color.ORANGE);
-				g.drawString("GAME OVER!", getHeight()/2, getWidth()/2);
-			}
-			else {
-				if(notMines == ((TOTAL_COLUMNS*TOTAL_ROWS)-mines)){
-					g.setColor(Color.MAGENTA);
-					g.drawString("WINNER!", getHeight()/2, getHeight()/2);
-				}
-			}
-		}
+//		if(mouseDownGridX!=-1 && mouseDownGridY!=-1){
+//			if(colorArray[mouseDownGridX][mouseDownGridY]==Color.BLACK){
+//				g.setColor(Color.ORANGE);
+//				g.drawString("GAME OVER!", getHeight()/2, getWidth()/2);
+//				//Main.reset();
+//			}
+//			else {
+//				if(notMines == ((TOTAL_COLUMNS*TOTAL_ROWS)-10)){
+//					g.setColor(Color.MAGENTA);
+//					g.drawString("WINNER!", getHeight()/2, getHeight()/2);
+//					//Main.reset();
+//				}
+//			}
+//		}
 	}
 
 
@@ -183,6 +183,21 @@ public class MyPanel extends JPanel {
 			return -1;
 		}
 		return y;
+	}
+	
+	public void newGame(){  
+		x = -1;
+		y = -1;
+		mouseDownGridX = 0;
+		mouseDownGridY = 0;
+		colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
+
+		mines = 0;
+		notMines = 0;
+		booleanDecider = new Random();
+		booleanArray = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
+		numbersArray = new int[TOTAL_COLUMNS][TOTAL_ROWS];
+		new MyPanel();
 	}
 }
 
