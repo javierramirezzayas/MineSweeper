@@ -1,15 +1,8 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Insets;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import java.awt.Image;
 public class MyPanel extends JPanel {
 	private static final long serialVersionUID = 3426940946811133635L;
 	private static final int GRID_X = 25;

@@ -3,10 +3,9 @@ import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Timer;
 
 import javax.swing.JFrame;
-import javax.swing.JFrame;
+
 public class MyMouseAdapter extends MouseAdapter {
 
 	public void mousePressed(MouseEvent e) {
@@ -130,6 +129,9 @@ public class MyMouseAdapter extends MouseAdapter {
 							//check and paint if there are empty spaces around the grid pressed
 							//metodo invoca mismo metodo.
 							MineSweeperLogic.checkEmptyGrid(myPanel.mouseDownGridX,myPanel.mouseDownGridY);
+							
+							
+							
 							//if derecha, izquierda, arriba, abajo == 0 do it again
 						}
 						//--- added by javier
