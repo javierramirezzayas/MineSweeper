@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -50,6 +51,7 @@ public class MineSweeperLogic extends MyPanel{
 	}
 	public static void likeToKeep(String theMessage, String titleMessage) {
 		int dialogButton = 0;
+		Toolkit.getDefaultToolkit().beep();
 		int dialogResult = JOptionPane.showConfirmDialog (null, theMessage, titleMessage,dialogButton);
 		if(dialogResult == JOptionPane.YES_OPTION){
 			Main.reset();
