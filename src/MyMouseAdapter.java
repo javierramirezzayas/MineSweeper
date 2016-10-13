@@ -31,6 +31,16 @@ public class MyMouseAdapter extends MouseAdapter {
 			myPanel.y = y;
 			myPanel.mouseDownGridX = myPanel.getGridX(x, y);
 			myPanel.mouseDownGridY = myPanel.getGridY(x, y);
+			
+			//ADDED FOR FUN
+			if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1) ) {
+				//Had pressed outside
+				//Do nothing
+			} else {
+				MyPanel.mousePressed = true;
+			}
+			//ADDED FOR FUN
+			
 			myPanel.repaint();
 
 
@@ -86,6 +96,9 @@ public class MyMouseAdapter extends MouseAdapter {
 			myPanel.y = y;
 			int gridX = myPanel.getGridX(x, y);
 			int gridY = myPanel.getGridY(x, y);
+			
+			MyPanel.mousePressed = false; //
+			
 			if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1) ) {
 				//Had pressed outside
 				//Do nothing
@@ -121,7 +134,6 @@ public class MyMouseAdapter extends MouseAdapter {
 							System.out.println("myPanel.mouseDownGridX = " + myPanel.mouseDownGridX);
 							System.out.println("myPanel.mouseDownGridY = " + myPanel.mouseDownGridY);
 							MineSweeperLogic.realcheckEmptyGrid(myPanel.mouseDownGridX,myPanel.mouseDownGridY);
-//							MineSweeperLogic.checkExtra(myPanel.mouseDownGridX,myPanel.mouseDownGridY);
 							myPanel.repaint();
 							
 						}
