@@ -34,7 +34,7 @@ public class MineSweeperLogic extends MyPanel{
 		// Is a void method, returns nothing. 
 
 		if (notOutOfBounds(gridX, gridY) 
-				&& numbersArray[gridX][gridY]==0 
+				&& numbersArray[gridX][gridY] == 0 
 				&& colorArray[gridX][gridY] == Color.WHITE
 				&& !(booleanArray[gridX][gridY])){
 			// If the selected grid is not out of bounds, has 0 mines adjacent to it, has not been uncovered 

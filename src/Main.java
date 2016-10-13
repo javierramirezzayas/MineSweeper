@@ -14,7 +14,6 @@ public class Main {
 		myFrame.setSize(323, 400);
 
 		myPanel = new MyPanel();
-		myPanel.newGame(); 
 		myFrame.add(myPanel);
 
 		MyMouseAdapter myMouseAdapter = new MyMouseAdapter();
@@ -24,9 +23,10 @@ public class Main {
 		myFrame.setVisible(true);
 	}
 
-	//Method to dispose the current window and call main again.
 	public static void reset(){
+		//Method to dispose the current window and call main again.
 		myFrame.setVisible(false);
+		myPanel.newGame();
 		myFrame.dispose();
 		String[] args = new String[123];
 		Main.main(args);

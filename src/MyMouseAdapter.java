@@ -5,13 +5,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 
-
-
 public class MyMouseAdapter extends MouseAdapter {
 
 	public void mousePressed(MouseEvent e) {
+		//This method is for when mouse is pressed.
 		switch (e.getButton()) {
-		case 1:		//Left mouse button
+		case 1:		
+			//Left mouse button
 			Component c = e.getComponent();
 			while (!(c instanceof JFrame)) {
 				c = c.getParent();
@@ -32,20 +32,21 @@ public class MyMouseAdapter extends MouseAdapter {
 			myPanel.mouseDownGridX = myPanel.getGridX(x, y);
 			myPanel.mouseDownGridY = myPanel.getGridY(x, y);
 			
-			//ADDED FOR FUN
 			if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1) ) {
 				//Had pressed outside
 				//Do nothing
 			} else {
-				MyPanel.mousePressed = true;
+				// If mouse is pressed inside the playable grid then return mousePressed true.
+				myPanel.mousePressed = true;
 			}
-			//ADDED FOR FUN
 			
 			myPanel.repaint();
 
 
 			break;
-		case 3:		//Right mouse button
+			
+		case 3:		
+			//Right mouse button
 			Component cFlag = e.getComponent();
 			while (!(cFlag instanceof JFrame)) {
 				c = cFlag.getParent();
@@ -66,17 +67,22 @@ public class MyMouseAdapter extends MouseAdapter {
 			myPanelFlag.mouseDownGridX = myPanelFlag.getGridX(xFlag, yFlag);
 			myPanelFlag.mouseDownGridY = myPanelFlag.getGridY(xFlag, yFlag);
 			myPanelFlag.repaint();
-			//Do nothing
 
 			break;
-		default:    //Some other button (2 = Middle mouse button, etc.)
+			
+		default:    
+			//Some other button (2 = Middle mouse button, etc.)
 			//Do nothing
 			break;
 		}
 	}
+	
+	
 	public void mouseReleased(MouseEvent e) {
+		// This method is for when mouse is released.
 		switch (e.getButton()) {
-		case 1:		//Left mouse button
+		case 1:		
+			//Left mouse button
 			Component c = e.getComponent();
 			while (!(c instanceof JFrame)) {
 				c = c.getParent();
@@ -97,7 +103,7 @@ public class MyMouseAdapter extends MouseAdapter {
 			int gridX = myPanel.getGridX(x, y);
 			int gridY = myPanel.getGridY(x, y);
 			
-			MyPanel.mousePressed = false; //
+			myPanel.mousePressed = false; // If by any means, mouse is released set mousePressed false.
 			
 			if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1) ) {
 				//Had pressed outside
@@ -115,54 +121,59 @@ public class MyMouseAdapter extends MouseAdapter {
 
 						//On the grid other than on the left column and on the top row:
 						if(MyPanel.booleanArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] 
-								&&( MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.WHITE)){
-							// If mouse is pressed on the grid and the color is white and there IS MINE, then paint it black. 
-							Color newColor =Color.BLACK;
-							MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+							&&( MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.WHITE)){
+							// If mouse is pressed on the grid, the grid is uncovered and is a mine, 
+							// then paint the grid black. 
+							MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.BLACK;
 							myPanel.repaint();	
 							for(int i=0;i<9;i++){
 								for(int j= 0;j<9;j++){
 									if(MyPanel.booleanArray[i][j]){
-										MyPanel.colorArray[i][j]=newColor;	
+										// If the first mine that is uncovered is black, 
+										// then paint the remaining mines black.
+										MyPanel.colorArray[i][j] = Color.BLACK;	
 									}
 								}	
 							}
 							myPanel.repaint();
-
 						}
 						else if(MyPanel.numbersArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == 0){
-							System.out.println("myPanel.mouseDownGridX = " + myPanel.mouseDownGridX);
-							System.out.println("myPanel.mouseDownGridY = " + myPanel.mouseDownGridY);
+							// If the selected grid does not have any mines adjacent then call the emptyGrid Method.
 							MineSweeperLogic.emptyGrid(myPanel.mouseDownGridX,myPanel.mouseDownGridY);
 							myPanel.repaint();
-							
 						}
-						else if(MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.WHITE){
+						else if(MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.WHITE
+								&& MyPanel.numbersArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] > 0){
+							// If the selected grid is covered, is not a bomb and has mines adjacent to it, 
+							// then uncover the grid.
 							MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.LIGHT_GRAY;
 							MyPanel.notMines++;
 							myPanel.repaint();
 						}
 						
 						
-						if(MineSweeperLogic.playerLost(myPanel.mouseDownGridX, myPanel.mouseDownGridY) || MineSweeperLogic.playerWon(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
+						if(MineSweeperLogic.playerLost(myPanel.mouseDownGridX, myPanel.mouseDownGridY) 
+								|| MineSweeperLogic.playerWon(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
+							//If player lost or won the game:
 							if(MineSweeperLogic.playerLost(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
+								//If the player lost then call promptUser method.
 								MineSweeperLogic.promptUser("SORRY, YOU LOST"
 										+ "  Would you like to play again?", "GAME OVER!");
 							}
 							else{
+								// If the player won then call promptUser method.
 								MineSweeperLogic.promptUser("CONGRATULATIONS! YOU WON!"
 										+ "  Would you like to play again?", "CONGRATULATIONS!");
 							}
 						}
 					}
-
 				}
 				myPanel.repaint();
 			}
-
-
 			break;
-		case 3:		//Right mouse button
+			
+		case 3:		
+			//Right mouse button
 			//Do nothing
 			Component cFlag = e.getComponent();
 			while (!(cFlag  instanceof JFrame)) {
@@ -197,14 +208,16 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Do nothing
 					} else {
 						if(MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY]==Color.WHITE && MyPanel.flags>0){
-							Color newColor =Color.RED;
-							MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY] = newColor;
+							// If the selected grid is covered and there are flags available, 
+							// paint the grid red(indicating that there is a possible mine), 
+							// also decrease the counter.
+							MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY] = Color.RED;
 							myPanelFlag.repaint();
 							MyPanel.flags--;
 						}
 						else if(MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY]==Color.RED){
-							Color newColor =Color.WHITE;
-							MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY] = newColor;
+							// If the grid already has a flag (is red) then take the flag out and store it in the counter. 
+							MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY] = Color.WHITE;
 							myPanelFlag.repaint();
 							MyPanel.flags++;
 						}
@@ -212,7 +225,9 @@ public class MyMouseAdapter extends MouseAdapter {
 				}
 			}
 			break;
-		default:    //Some other button (2 = Middle mouse button, etc.)
+			
+		default:    
+			//Some other button (2 = Middle mouse button, etc.)
 			//Do nothing
 			break;
 		}

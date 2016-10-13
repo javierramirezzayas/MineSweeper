@@ -23,10 +23,11 @@ public class MyPanel extends JPanel {
 	public Random booleanDecider = new Random();
 	public static boolean[][] booleanArray = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
 	public static  int[][] numbersArray = new int[TOTAL_COLUMNS][TOTAL_ROWS];
-	public static boolean mousePressed = false;
+	public boolean mousePressed = false;
 
 
-	public MyPanel() {   //This is the constructor... this code runs first to initialize
+	public MyPanel() {   
+		//This is the constructor... this code runs first to initialize
 
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
@@ -40,39 +41,25 @@ public class MyPanel extends JPanel {
 
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
 			for (int y = 0; y < TOTAL_ROWS; y++) {
+				// This loop sets the whole colorArray, booleanArray and numbersArray to initial conditions.
 				colorArray[x][y] = Color.WHITE;
 				booleanArray[x][y] = false;
 			}
 		}
 		while (flags<10){
+			// This loop sets the mines in the grid randomly. 
 			int x = booleanDecider.nextInt(9);
 			int y = booleanDecider.nextInt(9);
-			System.out.println("Mine at: x = " + x + " y = " + y);
 			if(!(booleanArray[x][y])){
 				booleanArray[x][y] = true;
 				flags++;
 			}
 		}
-
-		//Setting Mine Indicators (numbers)
-		for (int x = 0; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
+		for (int x = 0; x < TOTAL_COLUMNS; x++) {   
 			for (int y = 0; y < TOTAL_ROWS; y++) {
-				MyPanel.numbersArray[x][y] = MineSweeperLogic.checkIndicator(x,y);
+				// This loop sets the indicators in the numbersArray
+				numbersArray[x][y] = MineSweeperLogic.checkIndicator(x,y);
 			}
-		}
-
-		//for development purposes
-		for (int y = 0; y < TOTAL_ROWS; y++) {
-			for (int x = 0; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
-				System.out.print("     ["+MyPanel.numbersArray[x][y]+"]     ");
-			}
-			System.out.println(" ");
-		}
-		for (int y = 0; y < TOTAL_ROWS; y++) {
-			for (int x = 0; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
-				System.out.print("     ["+MyPanel.booleanArray[x][y]+"]     ");
-			}
-			System.out.println(" ");
 		}
 	}
 
@@ -93,8 +80,7 @@ public class MyPanel extends JPanel {
 		g.setColor(darkBlue);
 		g.fillRect(x1, y1, width + 1, height + 1);
 
-		//Draw the grid minus the bottom row (which has only one cell)
-		//By default, the grid will be 10x10 (see above: TOTAL_COLUMNS and TOTAL_ROWS) 
+		//By default, the grid will be 9x9 (see above: TOTAL_COLUMNS and TOTAL_ROWS) 
 		g.setColor(Color.BLACK);
 		for (int y = 0; y <= TOTAL_ROWS ; y++) {
 			g.drawLine(x1 + GRID_X, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)), x1 + GRID_X + ((INNER_CELL_SIZE + 1) * TOTAL_COLUMNS), y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)));
@@ -103,7 +89,7 @@ public class MyPanel extends JPanel {
 			g.drawLine(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)), y1 + GRID_Y, x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)), y1 + GRID_Y + ((INNER_CELL_SIZE + 1) * (TOTAL_ROWS )));
 		}
 
-		//Small square for bombs
+		//Small square that shows the amount of possible mines left.
 		g.setColor(Color.WHITE);
 		g.fillRect(GRID_X+1,(int) (getHeight()*0.85), INNER_CELL_SIZE*4, INNER_CELL_SIZE);
 		g.setColor(Color.BLACK);
@@ -117,31 +103,33 @@ public class MyPanel extends JPanel {
 		g.fillOval(255, 315, 10, 10);
 		g.fillOval(275, 315, 10, 10);
 		if(mousePressed == true){
-			g.drawOval(265, 335, 5, 10);  //risky face
+			// If player presses the mouse, the smiley face will change.
+			g.drawOval(265, 335, 5, 10); 
 		}
 		else if(mousePressed == false){
-			g.drawArc(255, 325, 30, 20, 180, 180);  //happy face
+			// If player releases the mouse, the smiley face will change.
+			g.drawArc(255, 325, 30, 20, 180, 180); 
 		}
 		
 		if(MineSweeperLogic.playerWon(mouseDownGridX, mouseDownGridY)){
+			// If player wins, paint the winning face.
 			g.setColor(Color.YELLOW);
 			g.fillOval(245, 305, 50, 50);
 			g.setColor(Color.BLACK);
 			g.fillOval(255, 315, 10, 10);
 			g.fillOval(275, 315, 10, 10);
-			
 			g.fillRect(250, 315, 15, 10);
 			g.drawLine(265, 320, 275, 320);
 			g.fillRect(275, 315, 15, 10);
 			g.drawArc(255, 325, 30, 20, 180, 180);
 		}
 		else if(MineSweeperLogic.playerLost(mouseDownGridX, mouseDownGridY)){
+			// If player loses, paint the losing face.
 			g.setColor(Color.YELLOW);
 			g.fillOval(245, 305, 50, 50);
 			g.setColor(Color.BLACK);
 			g.fillOval(255, 315, 10, 10);
 			g.fillOval(275, 315, 10, 10);
-			
 			g.drawArc(255, 335, 30, 20, 0, 180);
 		}
 
@@ -149,12 +137,13 @@ public class MyPanel extends JPanel {
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {
 			for (int y = 0; y < TOTAL_ROWS; y++) {
 				if ((x == 0) || (y != TOTAL_ROWS)) {
+					//Paint cell colors white.
 					Color c = colorArray[x][y];
 					g.setColor(c);
 					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);
 
-					// If square is pressed and it has an indicator (number) that is not 0: Paint the indicator  
 					if ((colorArray[x][y] == Color.LIGHT_GRAY) && (numbersArray[x][y] != 0)){
+						// If square is pressed and it has an indicator (number) that is not 0, Paint the indicator  
 						g.setColor(Color.RED);
 						g.drawString(String.valueOf(numbersArray[x][y]), (x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 11),
 								(y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 20));
@@ -162,10 +151,7 @@ public class MyPanel extends JPanel {
 				}
 			}	
 		}
-
 	}
-
-
 
 	public int getGridX(int x, int y) {
 		Insets myInsets = getInsets();
@@ -174,10 +160,12 @@ public class MyPanel extends JPanel {
 		x = x - x1 - GRID_X;
 		y = y - y1 - GRID_Y;
 
-		if (x < 0) {   //To the left of the grid
+		if (x < 0) {   
+			//To the left of the grid
 			return -1;
 		}
-		if (y < 0) {   //Above the grid
+		if (y < 0) {   
+			//Above the grid
 			return -1;
 		}
 		if ((x % (INNER_CELL_SIZE + 1) == 0) || (y % (INNER_CELL_SIZE + 1) == 0)) {   //Coordinate is at an edge; not inside a cell
@@ -187,10 +175,9 @@ public class MyPanel extends JPanel {
 		x = x / (INNER_CELL_SIZE + 1);
 		y = y / (INNER_CELL_SIZE + 1);
 
-		if (x == 0 && y == TOTAL_ROWS-1 ) {    //The lower left extra cell
-			return x;
-		}
-		if (x < 0 || x > TOTAL_COLUMNS - 1 || y < 0 || y > TOTAL_ROWS - 1) {   //Outside the rest of the grid
+
+		if (x < 0 || x > TOTAL_COLUMNS - 1 || y < 0 || y > TOTAL_ROWS - 1) {   
+			//Outside the rest of the grid
 			return -1;
 		}
 
@@ -202,10 +189,12 @@ public class MyPanel extends JPanel {
 		int y1 = myInsets.top;
 		x = x - x1 - GRID_X;
 		y = y - y1 - GRID_Y;
-		if (x < 0) {   //To the left of the grid
+		if (x < 0) {  
+			//To the left of the grid
 			return -1;
 		}
-		if (y < 0) {   //Above the grid
+		if (y < 0) {   
+			//Above the grid
 			return -1;
 		}
 		if ((x % (INNER_CELL_SIZE + 1) == 0) || (y % (INNER_CELL_SIZE + 1) == 0)) {   //Coordinate is at an edge; not inside a cell
@@ -213,9 +202,6 @@ public class MyPanel extends JPanel {
 		}
 		x = x / (INNER_CELL_SIZE + 1);
 		y = y / (INNER_CELL_SIZE + 1);
-		if (x == 0 && y == TOTAL_ROWS - 1) {    //The lower left extra cell
-			return y;
-		}
 		if (x < 0 || x > TOTAL_COLUMNS - 1 || y < 0 || y > TOTAL_ROWS - 1) {   //Outside the rest of the grid
 			return -1;
 		}
@@ -223,6 +209,7 @@ public class MyPanel extends JPanel {
 	}
 
 	public void newGame(){  
+		// This method resets all instance variables to initial conditions
 		x = -1;
 		y = -1;
 		mouseDownGridX = 0;
@@ -234,7 +221,6 @@ public class MyPanel extends JPanel {
 		booleanDecider = new Random();
 		booleanArray = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
 		numbersArray = new int[TOTAL_COLUMNS][TOTAL_ROWS];
-		new MyPanel();
 	}
 }
 
