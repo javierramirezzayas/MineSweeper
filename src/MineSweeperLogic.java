@@ -78,18 +78,15 @@ public class MineSweeperLogic extends MyPanel{
 			colorArray[gridX][gridY] = Color.LIGHT_GRAY;
 			MyPanel.notMines++;
 			
-
-			realcheckEmptyGrid(gridX-1, gridY-1); 
-			realcheckEmptyGrid(gridX, gridY-1);
-//			System.out.println("new_gridX = "+gridX);
-//			System.out.println("new_gridY = "+gridY);
-//			System.out.println("Jumped out of the rescursion");
-			realcheckEmptyGrid(gridX+1, gridY-1);  
-			realcheckEmptyGrid(gridX-1, gridY);  
-			realcheckEmptyGrid(gridX+1, gridY); 
-			realcheckEmptyGrid(gridX-1, gridY+1);  
-			realcheckEmptyGrid(gridX, gridY+1); 
-			realcheckEmptyGrid(gridX+1,gridY+1);
+			
+			
+			for(int i = gridX-1; i <= gridX + 1; i++ ){
+				for(int j = gridY-1; j <= gridY + 1; j++){
+					if(!((i==gridX) && (j==gridY))){
+						realcheckEmptyGrid(i, j);
+					}
+				}
+			}
 
 		}
 		else if(!(gridX <= -1 || gridY <= -1 || gridX >= TOTAL_COLUMNS || gridY >= TOTAL_ROWS) 
