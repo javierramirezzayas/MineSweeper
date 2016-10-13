@@ -8,48 +8,36 @@ public class MineSweeperLogic extends MyPanel{
 
 	public static int squareProperty(int gridX, int gridY){
 		int squareCounter = 0;
+
 		for(int i=gridX-1;i<=gridX+1;i++){
 			for(int j=gridY-1;j<=gridY+1;j++){
-				if(!(i==gridX && j==gridY)&& !(i == -1 || j == -1 || i >= TOTAL_COLUMNS || j >= TOTAL_ROWS) && booleanArray[i][j]==true){
-					squareCounter++;
+				if(i==gridX && j==gridY && booleanArray[i][j]){
+					return squareCounter = -1;
+
 				}
+				else
+					if(!(i==gridX && j==gridY)&& !(i == -1 || j == -1 || i >= TOTAL_COLUMNS || j >= TOTAL_ROWS)
+							&& booleanArray[i][j]==true){
+						squareCounter++;
+					}
+
 			}
 		}
+
 		return squareCounter;
 	}
 
-	
-		
-	
-	//-------------addded javier
-//	public static void checkEmptyGrid(int gridX, int gridY){ //necesita pintar
-//
-//		for(int x = gridX-1; x <= gridX+1 ; x++){
-//			for(int y = gridY-1; y <= gridY+1 ; y++){
-//				if (!(x == -1 || y == -1 || x >= TOTAL_COLUMNS || y >= TOTAL_ROWS) 
-//						&& (MyPanel.numbersArray[x][y]>=0) && !(MyPanel.booleanArray[x][y])){
-//					Color newColor = Color.LIGHT_GRAY;
-//					colorArray[x][y] = newColor;
-//					MyPanel.notMines++;
-//					if((MyPanel.numbersArray[x][y]==0) && !(MyPanel.booleanArray[x][y])){
-//						checkEmptyGrid(x, y);
-//					}
-//				}
-//			}
-		//}
-	//}
-	//--------------added javier
 
 	public static boolean  playerWon(int mouseDownGridX, int mouseDownGridY){
 		boolean status = false;
 		if(mouseDownGridX!=-1 && mouseDownGridY!=-1){
-		if(notMines == ((TOTAL_COLUMNS*TOTAL_ROWS)-10)){
-			//g.setColor(Color.MAGENTA);
-			//g.drawString("WINNER!", getHeight()/2, getHeight()/2);
-			//Main.reset();
-			status =  true;//gano
+			if(notMines == ((TOTAL_COLUMNS*TOTAL_ROWS)-10)){
+				//g.setColor(Color.MAGENTA);
+				//g.drawString("WINNER!", getHeight()/2, getHeight()/2);
+				//Main.reset();
+				status =  true;//gano
 
-		}}
+			}}
 		return status;
 	}
 	public static boolean  playerLost(int mouseDownGridX, int mouseDownGridY){
@@ -69,6 +57,55 @@ public class MineSweeperLogic extends MyPanel{
 		else{
 			System.exit(0);
 		}
-	  }
+	}
+
+	//--------------added javier(12/10/2016)
+	public static void realcheckEmptyGrid(int gridX, int gridY){
+
+		System.out.println("gridX = "+gridX);
+		System.out.println("gridY = "+gridY);
+
+		
+		if (!(gridX <= -1 || gridY <= -1 || gridX >= TOTAL_COLUMNS || gridY >= TOTAL_ROWS) 
+				&& MyPanel.numbersArray[gridX][gridY]==0 
+				&& MyPanel.colorArray[gridX][gridY] == Color.WHITE
+				&& MyPanel.booleanArray[gridX][gridY]==false){
+			
+			System.out.println("CONDITIONS ARE MET");
+			
+			colorArray[gridX][gridY] = Color.LIGHT_GRAY;
+			MyPanel.notMines++;
+			
+
+			realcheckEmptyGrid(gridX-1, gridY-1); 
+			realcheckEmptyGrid(gridX, gridY-1);
+//			System.out.println("new_gridX = "+gridX);
+//			System.out.println("new_gridY = "+gridY);
+//			System.out.println("Jumped out of the rescursion");
+			realcheckEmptyGrid(gridX+1, gridY-1);  
+			realcheckEmptyGrid(gridX-1, gridY);  
+			realcheckEmptyGrid(gridX+1, gridY); 
+			realcheckEmptyGrid(gridX-1, gridY+1);  
+			realcheckEmptyGrid(gridX, gridY+1); 
+			realcheckEmptyGrid(gridX+1,gridY+1);
+
+		}
+		else if(!(gridX <= -1 || gridY <= -1 || gridX >= TOTAL_COLUMNS || gridY >= TOTAL_ROWS) 
+				&& MyPanel.numbersArray[gridX][gridY]>0 
+				&& MyPanel.colorArray[gridX][gridY] == Color.WHITE
+				&& MyPanel.booleanArray[gridX][gridY]==false){
+			colorArray[gridX][gridY] = Color.LIGHT_GRAY;;
+			MyPanel.notMines++;
+		}
+		else{
+		System.out.println("CONDITIONS ARE NOT MET");
+		}
+		
+	}
+
+
+	//--------------added Javier(12/10/2016)
+
+
 
 }

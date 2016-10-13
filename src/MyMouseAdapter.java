@@ -117,26 +117,21 @@ public class MyMouseAdapter extends MouseAdapter {
 							myPanel.repaint();
 
 						}
+						else if(MyPanel.numbersArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == 0){
+							System.out.println("myPanel.mouseDownGridX = " + myPanel.mouseDownGridX);
+							System.out.println("myPanel.mouseDownGridY = " + myPanel.mouseDownGridY);
+							MineSweeperLogic.realcheckEmptyGrid(myPanel.mouseDownGridX,myPanel.mouseDownGridY);
+//							MineSweeperLogic.checkExtra(myPanel.mouseDownGridX,myPanel.mouseDownGridY);
+							myPanel.repaint();
+							
+						}
 						else if(MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.WHITE){
-							// If mouse is pressed on the grid and the color is white and there is NO MINE, then paint it gray.
-							Color newColor =Color.LIGHT_GRAY;
-							MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+							MyPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.LIGHT_GRAY;
 							MyPanel.notMines++;
 							myPanel.repaint();
-
-
-							//--- added by javier------------------
-							if (MyPanel.numbersArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == 0){
-								//check and paint if there are empty spaces around the grid pressed
-								//metodo invoca mismo metodo.
-								//Add	//MineSweeperLogic.checkEmptyGrid(myPanel.mouseDownGridX,myPanel.mouseDownGridY);
-								//if derecha, izquierda, arriba, abajo == 0 do it again
-							}
-							//---------------------------------
 						}
-
-						System.out.println(MineSweeperLogic.playerLost(myPanel.mouseDownGridX, myPanel.mouseDownGridY));
-						System.out.println(MineSweeperLogic.playerWon(myPanel.mouseDownGridX, myPanel.mouseDownGridY));
+						
+						
 						if(MineSweeperLogic.playerLost(myPanel.mouseDownGridX, myPanel.mouseDownGridY) || MineSweeperLogic.playerWon(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
 							if(MineSweeperLogic.playerLost(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
 								MineSweeperLogic.likeToKeep("SORRY, YOU LOST"
