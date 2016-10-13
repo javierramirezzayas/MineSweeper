@@ -4,7 +4,7 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+
 
 
 public class MyMouseAdapter extends MouseAdapter {
@@ -133,7 +133,7 @@ public class MyMouseAdapter extends MouseAdapter {
 						else if(MyPanel.numbersArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == 0){
 							System.out.println("myPanel.mouseDownGridX = " + myPanel.mouseDownGridX);
 							System.out.println("myPanel.mouseDownGridY = " + myPanel.mouseDownGridY);
-							MineSweeperLogic.realcheckEmptyGrid(myPanel.mouseDownGridX,myPanel.mouseDownGridY);
+							MineSweeperLogic.emptyGrid(myPanel.mouseDownGridX,myPanel.mouseDownGridY);
 							myPanel.repaint();
 							
 						}
@@ -146,11 +146,11 @@ public class MyMouseAdapter extends MouseAdapter {
 						
 						if(MineSweeperLogic.playerLost(myPanel.mouseDownGridX, myPanel.mouseDownGridY) || MineSweeperLogic.playerWon(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
 							if(MineSweeperLogic.playerLost(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
-								MineSweeperLogic.likeToKeep("SORRY, YOU LOST"
+								MineSweeperLogic.promptUser("SORRY, YOU LOST"
 										+ "  Would you like to play again?", "GAME OVER!");
 							}
 							else{
-								MineSweeperLogic.likeToKeep("CONGRATULATIONS! YOU WON!"
+								MineSweeperLogic.promptUser("CONGRATULATIONS! YOU WON!"
 										+ "  Would you like to play again?", "CONGRATULATIONS!");
 							}
 						}
@@ -196,17 +196,17 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Released the mouse button on a different cell where it was pressed
 						//Do nothing
 					} else {
-						if(MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY]==Color.WHITE && MyPanel.mines>0){
+						if(MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY]==Color.WHITE && MyPanel.flags>0){
 							Color newColor =Color.RED;
 							MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY] = newColor;
 							myPanelFlag.repaint();
-							MyPanel.mines--;
+							MyPanel.flags--;
 						}
 						else if(MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY]==Color.RED){
 							Color newColor =Color.WHITE;
 							MyPanel.colorArray[myPanelFlag.mouseDownGridX][myPanelFlag.mouseDownGridY] = newColor;
 							myPanelFlag.repaint();
-							MyPanel.mines++;
+							MyPanel.flags++;
 						}
 					}
 				}

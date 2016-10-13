@@ -17,7 +17,8 @@ public class MyPanel extends JPanel {
 	public int mouseDownGridY = 0;
 	public static Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 
-	public static int mines = 0;
+	public static int mines = 10;
+	public static int flags = 0;
 	public static int notMines = 0;
 	public Random booleanDecider = new Random();
 	public static boolean[][] booleanArray = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
@@ -43,20 +44,20 @@ public class MyPanel extends JPanel {
 				booleanArray[x][y] = false;
 			}
 		}
-		while (mines<10){
+		while (flags<10){
 			int x = booleanDecider.nextInt(9);
 			int y = booleanDecider.nextInt(9);
 			System.out.println("Mine at: x = " + x + " y = " + y);
 			if(!(booleanArray[x][y])){
 				booleanArray[x][y] = true;
-				mines++;
+				flags++;
 			}
 		}
 
 		//Setting Mine Indicators (numbers)
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
 			for (int y = 0; y < TOTAL_ROWS; y++) {
-				MyPanel.numbersArray[x][y] = MineSweeperLogic.squareProperty(x,y);
+				MyPanel.numbersArray[x][y] = MineSweeperLogic.checkIndicator(x,y);
 			}
 		}
 
@@ -107,7 +108,7 @@ public class MyPanel extends JPanel {
 		g.fillRect(GRID_X+1,(int) (getHeight()*0.85), INNER_CELL_SIZE*4, INNER_CELL_SIZE);
 		g.setColor(Color.BLACK);
 		g.fillRect(GRID_X+5,(int)(getHeight()*0.85)+ 4, 20, 20);
-		g.drawString("Bombs: " + mines, GRID_X+28, (int)(getHeight()*0.90));
+		g.drawString("Bombs: " + flags, GRID_X+28, (int)(getHeight()*0.90));
 
 		//Smiley Face
 		g.setColor(Color.YELLOW);
@@ -227,8 +228,8 @@ public class MyPanel extends JPanel {
 		mouseDownGridX = 0;
 		mouseDownGridY = 0;
 		colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
-
 		mines = 0;
+		flags = 0;
 		notMines = 0;
 		booleanDecider = new Random();
 		booleanArray = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
