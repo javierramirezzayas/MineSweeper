@@ -209,7 +209,7 @@ public class MyPanel extends JPanel {
 	}
 
 	public void newGame(){  
-		// This method resets all instance variables to initial conditions
+		// This method resets all instance variables to initial conditions.
 		x = -1;
 		y = -1;
 		mouseDownGridX = 0;
